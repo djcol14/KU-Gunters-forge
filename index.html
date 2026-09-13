@@ -6,54 +6,50 @@
     <title>Gunter's Forge</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <header>
+        <button>Home</button>
         <h1>Gunter's Forge</h1>
-        <button id="cartButton">Cart</button>
+        <button>Cart</button>
     </header>
-
     <main>
-        <h2>Welcome to Gunter's Forge</h2>
-        <p>Masterfully forged tools for the people of Mautern.</p>
-
+        <section class="hero">
+            <h1>Welcome to Gunter's Forge!</h1>
+            <p>Quality goods for adventures, by Gunter himself.</p>
+        </section>
         <section class="products">
-
-            <button class="product-card" onclick="openProduct('sword')">
-                <div class="product-image">⚔️</div>
-                <h3>Sword</h3>
-                <p>View Sword</p>
-            </button>
-
-            <button class="product-card" onclick="openProduct('armor')">
-                <div class="product-image">🛡️</div>
-                <h3>Plate Armor</h3>
-                <p>View Armor</p>
-            </button>
-
-            <button class="product-card" onclick="openProduct('chainmail')">
-                <div class="product-image">⛓️</div>
-                <h3>Chain Mail</h3>
-                <p>View Chain Mail</p>
-            </button>
-
-            <button class="product-card" onclick="openProduct('pot')">
-                <div class="product-image">🍲</div>
-                <h3>Cooking Pot</h3>
-                <p>View Cooking Pot</p>
-            </button>
-
+            <div class="product-card">
+                <img src="images/sword.jpg" alt="Sword">
+                <h2>Sword</h2>
+                <p>50 gold pieces</p>
+                <button onclick="openProduct('sword')">View Details</button>
+            </div>
+            <div class="product-card">
+                <img src="images/chainmail.jpg" alt="Chain Mail">
+                <h2>Chain Mail</h2>
+                <p>100 gold pieces</p>
+                <button onclick="openProduct('chainmail')">View Details</button>
+            </div>
+            <div class="product-card">
+                <img src="images/platearmor.jpg" alt="Plate Armor">
+                <h2>Plate Armor</h2>
+                <p>200 gold pieces</p>
+                <button onclick="openProduct('platearmor')">View Details</button>
+            </div>
+            <div class="product-card">
+                <img src="images/cookingpot.jpg" alt="Cooking Pot">
+                <h2>Cooking Pot</h2>
+                <p>25 gold pieces</p>
+                <button onclick="openProduct('cookingpot')">View Details</button>
+            </div>
         </section>
     </main>
-
-    <nav class="bottom-nav">
+    <nav>
         <button>Home</button>
         <button>Shop</button>
+        <button>Inventory</button>
         <button>Orders</button>
     </nav>
-
     <script src="script.js"></script>
-
 </body>
 </html>

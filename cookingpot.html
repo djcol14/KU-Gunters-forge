@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking Pot Product Page</title>
+</head>
+<body data-product="cookingpot">
+    <header>
+        <button onclick="window.history.back()">Back</button>
+        <h2>Gunter's Forge</h2>
+        <button>Cart</button>
+    </header>
+    <h1>Cooking Pot</h1>
+    <h4>This is a place holder for product image</h4>
+    <p>Cooking pots are essential for any adventurer's journey, allowing you to prepare meals and boil water for purification.</p>
+    <p>Price = 25 Gold Pieces</p>
+    <div class="quantity-selector">
+        <button type="button" onclick="changeQuantity(-1)">-</button>
+        <span id="quantity">1</span>
+        <button type="button" onclick="changeQuantity(1)">+</button>
+    </div>
+
+    <p>Total Price: <span id="total-price">0.00</span> gold</p>
+
+    <button type="button" onclick="addtocart()">Add to Cart</button>
+    <script src="script.js"></script>
+</body>
+</html>``
