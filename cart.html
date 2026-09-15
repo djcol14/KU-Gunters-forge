@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <button onclick="window.history.back()">Back</button>
+        <h2>Your Cart</h2>
+    </header>
+    <main>
+    <section id="cart-items">
+        <p>placeholder for product images descriptions</p>
+            
+        <div class="item-list">
+            <p>place holder for item list and amount selectors</p>
+        </div>
+
+    </section>
+    <section id="cart-summary">
+        <p>Total Price: <span id="total-price">0.00</span> gold</p>
+        <button type="button" onclick="checkout()">Checkout</button>
+    </section>
+</main>
+
+    <nav>
+        <button>
+            <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
+        </button>
+        <button>Shop</button>
+        <button>Inventory</button>
+        <button>Orders</button>
+    </nav>
+    <script src="script.js"></script>
+</body>
+</html>
