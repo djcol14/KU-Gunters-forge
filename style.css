@@ -1,0 +1,69 @@
+body {
+    margin: 0;
+    background-color: #18202b;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9e0000;
+    padding: 12px;
+}
+header img {
+    width: clamp(50px, 12vw, 100px);
+    height: auto;
+}
+header h1 {
+    margin: 0;
+}
+header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.hero {
+    padding: 30px 5%;
+    text-align: center;
+}
+.gunter-intro {
+    background-color: #d6b77a;
+    padding: 15px;
+    border-radius: 10px;
+}
+.products {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 10px 5%;
+}
+.product-card {
+    background-image: url(assets/backgrounds/productcardback.PNG);
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    border: 3px solid #000000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.product-card img {
+    width: 80%;
+    max-width: 100%;
+    height: auto;
+    transform: rotate(35deg);
+}
+.product-card h2 {
+    margin: 5px 0;
+}
+.product-card p {
+    margin: 5px 0;
+}
+.product-card button {
+    padding: 8px 15px;
+    margin-top: 5px;
+}
+.product-card:hover {
+    transform: scale(1.02);
+}
+.product-card:active {
+    filter: brightness(80%);
+    transform: scale(0.98);
+}
