@@ -17,7 +17,6 @@ function openProduct(product){
 }
 
 
-
 const products = {
     sword: {
         name: "Sword",
@@ -58,3 +57,23 @@ function changeQuantity(amount){
     updatePrice();
 }
 updatePrice();
+
+function opencart(){
+    window.location.href = "cart.html";
+}
+
+function navindex(){
+    window.location.href = "index.html";
+}
+
+function addtocart(product){
+    console.log(product);
+    let quantity = document.getElementById("quantity").textContent;
+    let item = {
+        product: product,
+        quantity: quantity
+    }
+    console.log(item);
+    localStorage.setItem("cart", JSON.stringify(item));
+    let cart = localStorage.getItem("cart");
+}
