@@ -8,6 +8,8 @@ header {
     align-items: center;
     background-color: #9e0000;
     padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
 }
 header img {
     width: clamp(50px, 12vw, 100px);
@@ -34,6 +36,8 @@ header button {
     grid-template-columns: 1fr 1fr;
     gap: 15px;
     padding: 10px 5%;
+    width: 100%;
+    box-sizing: border-box;
 }
 .product-card {
     background-image: url(assets/backgrounds/productcardback.PNG);
@@ -42,6 +46,7 @@ header button {
     border-radius: 10px;
     border: 3px solid #000000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    min-width: 0;
 }
 #sword-card img {
     width: 80%;
@@ -65,4 +70,8 @@ header button {
 .product-card:active {
     filter: brightness(80%);
     transform: scale(0.98);
+}
+main{
+    width: 100%;
+    box-sizing: border-box;
 }
