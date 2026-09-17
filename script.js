@@ -56,7 +56,9 @@ function changeQuantity(amount){
     }
     updatePrice();
 }
-updatePrice();
+if (product) {
+    updatePrice();
+}
 
 function opencart(){
     window.location.href = "cart.html";
@@ -67,13 +69,32 @@ function navindex(){
 }
 
 function addtocart(product){
-    console.log(product);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let quantity = document.getElementById("quantity").textContent;
     let item = {
         product: product,
         quantity: quantity
     }
+    console.log(cart);
+    console.log(Array.isArray(cart));
+    cart.push(item);
     console.log(item);
-    localStorage.setItem("cart", JSON.stringify(item));
-    let cart = localStorage.getItem("cart");
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
+
+function displaycart(){
+    console.log("displaycart function is running");
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log(cart);
+    for (let i = 0; i < cart.length; i++) {
+        let product = cart[i].product;
+        let quantity = cart[i].quantity;
+        console.log(product);
+        document.querySelector(".item-list").textContent += "\n" + product + " x " + quantity;
+        let itemDiv = document.createElement("div");
+    }
+}
+if (document.querySelector(".item-list")) {
+    displaycart();
+}
+console.log("SCRIPT IS RUNNING");
