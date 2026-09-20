@@ -1,6 +1,7 @@
 body {
     margin: 0;
     background-color: #18202b;
+    color: white;
 }
 header {
     display: flex;
