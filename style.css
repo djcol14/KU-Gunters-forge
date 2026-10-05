@@ -55,6 +55,11 @@ header button {
     height: auto;
     transform: rotate(35deg);
 }
+#chainmail-card img {
+    width: 80%;
+    max-width: 100%;
+    height: auto;
+}
 .product-card h2 {
     margin: 5px 0;
 }
@@ -76,3 +81,59 @@ main{
     width: 100%;
     box-sizing: border-box;
 }
+.cart-items img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+.item-list > div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+.item-list > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.product-image-page {
+    width: 70%;
+    max-width: 400px;
+    height: auto;
+    align-items: center;
+}
+#sword-image-page {
+    transform: rotate(35deg);
+}
+h1 {
+    text-align: center;
+}
+.pricingDiv {
+    display: flex;
+    flex-direction: column;
+}
+.checkout-item > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-item{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+.checkout-item img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+

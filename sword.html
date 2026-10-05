@@ -9,16 +9,18 @@
 <body data-product="sword">
     
     <header>
-        <button onclick="window.history.back()">Back</button>
+        <button onclick="window.history.back()">
+            <img src="assets/icons/backarrow.PNG" alt="Back Button">
+        </button>
         <h2>Gunter's Forge</h2>
         <button onclick="opencart()">
             <img src="assets/icons/carticon.PNG" alt="Cart Logo" width="50">
         </button>
     </header>
 
-    <section style="background-image: url(assets/backrounds/productcardback.PNG); padding: 20px; border-radius: 10px;">
+    <section>
     <h1>Sword</h1>
-    <img src="assets/products/swordproduct.PNG" alt="Sword Image" width="200">
+    <img class="product-image-page" id="sword-image-page" src="assets/products/swordproduct.PNG" alt="Sword Image">
     <p>A sharp and sturdy sword for combat. Can be used for both melee and ranged attacks.</p>
     <p>Price = 75 Gold Pieces</p>
     

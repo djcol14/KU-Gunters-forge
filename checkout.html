@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chain Mail Product Page</title>
+    <title>Checkout Screen</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-product="chainmail">
-    
+<body>
     <header>
         <button onclick="window.history.back()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -17,22 +16,15 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
     </header>
+    <main>
+        <section class="checkout-review">
 
-    <h1>Chain Mail</h1>
-    <img class="product-image-page" id="chainmail-image-page" src="assets/products/chainmailproduct.PNG" alt="Chainmail Shirt">
-    <p>Chain mail is a type of body armor made of interlocking metal rings. It provides good protection while maintaining flexibility.</p>
-    <p>Price = 100 Gold Pieces</p>
-
-    <div class="quantity-selector">
-        <button type="button" onclick="changeQuantity(-1)">-</button>
-        <span id="quantity">1</span>
-        <button type="button" onclick="changeQuantity(1)">+</button>
-    </div>
-
-    <p>Total Price: <span id="total-price">0.00</span> gold</p>
-
-    <button type="button" onclick="addtocart('chainmail')">Add to Cart</button>
-
+        </section>
+        <section class="checkout-total-completion">
+            <p>Total Price: <span id="total-price">0.00</span> gold</p>
+            <button type="button" onclick="placeOrder()">Place Order</button>
+        </section>
+    </main>
     <nav>
         <button onclick="navindex()">
             <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
