@@ -114,5 +114,26 @@ h1 {
 }
 .pricingDiv {
     display: flex;
-    flex-direction: colum
+    flex-direction: column;
 }
+.checkout-item > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-item{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+.checkout-item img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+
