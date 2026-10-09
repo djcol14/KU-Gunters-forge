@@ -17,21 +17,25 @@
         </button>
     </header>
     <main>
-        <section class="checkout-review">
+        <form id="checkout-form" onsubmit="placeOrder(event)">
+            <section class="checkout-review">
 
-        </section>
-        <section class="checkout-total-completion">
-            <p>Total Price: <span id="total-price">0.00</span> gold</p>
-            <button type="button" onclick="placeOrder()">Place Order</button>
-        </section>
+            </section>
+            <section class="checkout-total-completion">
+                <label for="customer-name">Customer name</label>
+                <input id="customer-name" name="customerName" type="text" autocomplete="name" required>
+                <p>Total Price: <span id="total-price">0.00</span> gold</p>
+                <button type="submit">Place Order</button>
+            </section>
+        </form>
     </main>
     <nav>
         <button onclick="navindex()">
             <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
         </button>
         <button>Shop</button>
-        <button>Inventory</button>
-        <button>Orders</button>
+        <button type="button" onclick="window.location.href='ordertracking.html'">Order Tracking</button>
+        <button type="button" onclick="window.location.href='gunter.html'">Gunter's access</button>
     </nav>
     <script src="script.js"></script>
 </body>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Track an Order | Gunter's Forge</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="customer-tracking-page">
+	<header>
+		<button type="button" onclick="navindex()" aria-label="Back to shop">
+			<img src="assets/icons/backarrow.PNG" alt="">
+		</button>
+		<h2>Gunter's Forge</h2>
+		<button type="button" onclick="opencart()" aria-label="Open cart">
+			<img src="assets/icons/carticon.PNG" alt="">
+		</button>
+	</header>
+	<main class="customer-tracking-main">
+		<h1>Track your order</h1>
+		<p>Enter the customer name and order number from your confirmation.</p>
+		<form id="tracking-form" class="customer-tracking-form">
+			<label for="tracking-customer-name">Customer name</label>
+			<input id="tracking-customer-name" name="customerName" type="text" autocomplete="name" required>
+			<label for="tracking-order-number">Order number</label>
+			<input id="tracking-order-number" name="orderNumber" type="text" inputmode="numeric" placeholder="For example, 1001" required>
+			<button type="submit">Find order</button>
+			<p id="tracking-message" role="status" aria-live="polite"></p>
+		</form>
+		<section id="tracking-result" class="customer-tracking-result" aria-live="polite" hidden>
+			<h2>Order #<span id="tracking-result-number"></span></h2>
+			<p>Customer: <span id="tracking-result-name"></span></p>
+			<p>Status: <strong id="tracking-result-status"></strong></p>
+			<p id="tracking-queue-position"></p>
+		</section>
+	</main>
+	<nav>
+		<button type="button" onclick="navindex()">
+			<img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
+		</button>
+		<button type="button" onclick="navindex()">Shop</button>
+		<button type="button" onclick="window.location.href='ordertracking.html'">Order Tracking</button>
+		<button type="button" onclick="window.location.href='gunter.html'">Gunter's access</button>
+	</nav>
+	<script src="script.js"></script>
+</body>
+</html>

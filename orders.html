@@ -6,9 +6,9 @@
     <title>Gunter's Forge Orders</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-gunter-protected>
     <header>
-        <button onclick="window.history.back()">
+        <button onclick="window.location.href='gunter.html'">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
         </button>
         <h2>Gunter's Forge</h2>
@@ -17,20 +17,18 @@
         </button>
     </header>
     <main>
-        <h1>My Orders</h1>
+        <h1>Gunter's Orders</h1>
         <div class="orders-list">
             <!-- Orders will be populated by JavaScript -->
         </div>
     </main>
     
-        <nav>
-            <button onclick="navindex()">
-                <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
-            </button>
-            <button>Shop</button>
-            <button>Inventory</button>
-            <button>Orders</button>
-        </nav>
+    <nav class="admin-nav" aria-label="Gunter tools">
+        <a href="gunter.html">Gunter panel</a>
+        <a href="ordertracking.html">Order Tracking</a>
+        <a href="gunter.html">Gunter's access</a>
+        <button type="button" onclick="logoutGunter()">Lock panel</button>
+    </nav>
     <script src="script.js"></script>
 </body>
 </html>

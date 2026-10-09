@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Inventory | Gunter's Forge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-gunter-protected>
+    <header>
+        <button type="button" onclick="window.location.href='gunter.html'" aria-label="Gunter panel">
+            <img src="assets/icons/backarrow.PNG" alt="">
+        </button>
+        <h2>Gunter's Forge</h2>
+        <button type="button" onclick="logoutGunter()">Lock</button>
+    </header>
+    <main class="admin-main">
+        <p class="admin-eyebrow">GUNTER'S WORKSHOP</p>
+        <h1>Material inventory</h1>
+        <p>Stock is deducted when an order enters the forging stage.</p>
+        <p id="inventory-message" class="admin-message" role="status" aria-live="polite"></p>
+        <form id="inventory-form">
+            <div id="inventory-list" class="inventory-list"></div>
+            <button class="admin-primary-button" type="submit">Save stock levels</button>
+        </form>
+        <section class="inventory-recipes-section" aria-labelledby="recipes-heading">
+            <h2 id="recipes-heading">Material use per item</h2>
+            <div id="inventory-recipes" class="inventory-recipes"></div>
+        </section>
+    </main>
+    <nav class="admin-nav" aria-label="Gunter tools">
+        <a href="gunter.html">Gunter panel</a>
+        <a href="ordertracking.html">Order Tracking</a>
+        <a href="gunter.html">Gunter's access</a>
+        <button type="button" onclick="logoutGunter()">Lock panel</button>
+    </nav>
+    <script src="script.js"></script>
+</body>
+</html>
