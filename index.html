@@ -6,7 +6,7 @@
     <title>Gunter's Forge</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
     <header>
         <button>
             <img src="assets/icons/homeicon.PNG" alt="Home Logo">
@@ -18,7 +18,8 @@
     </header>
     <main>
         <section class="hero">
-            <img src="assets/backgrounds/ForgeBackground.PNG" alt="Forge Background">
+            <img class="hero-background" src="assets/backgrounds/ForgeBackground.PNG" alt="Forge Background">
+            <img class="hero-gunter" src="assets/logos/gunter.PNG" alt="Gunter the blacksmith">
             <div class="gunter-intro">
             <h1>Welcome to Gunter's Forge!</h1>
             <p>Quality goods for adventures, by Gunter himself.</p>
@@ -56,8 +57,8 @@
             <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
         </button>
         <button>Shop</button>
-        <button>Inventory</button>
-        <button onclick="navorders()">Orders</button>
+        <button type="button" onclick="window.location.href='ordertracking.html'">Order Tracking</button>
+        <button type="button" onclick="window.location.href='gunter.html'">Gunter's access</button>
     </nav>
     <script src="script.js"></script>
 </body>

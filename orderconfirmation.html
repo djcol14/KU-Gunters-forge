@@ -19,6 +19,7 @@
     <main>
         <h1>Order Placed</h1>
         <p>Your order number is: <span id="order-number">0000</span></p>
+        <p>Customer: <span id="order-customer-name"></span></p>
         <section class="order-details">
             <h2>Order Details</h2>
             <p>Items in your order:</p>
@@ -31,6 +32,7 @@
             <p>Total: <span id="order-total">0</span> gold</p>
         </section>
         <h2>Thank you for your purchase!</h2>
+        <p><a href="ordertracking.html">Track this order</a></p>
         
     </main>
 
@@ -39,8 +41,8 @@
             <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
         </button>
         <button>Shop</button>
-        <button>Inventory</button>
-        <button>Orders</button>
+        <button type="button" onclick="window.location.href='ordertracking.html'">Order Tracking</button>
+        <button type="button" onclick="window.location.href='gunter.html'">Gunter's access</button>
     </nav>
 
     <script src="script.js"></script>
