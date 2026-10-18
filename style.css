@@ -1,3 +1,6 @@
+/* style for all pages */
+/* made using Git Copilot */
+
 body {
     margin: 0;
 }
@@ -17,17 +20,6 @@ header button {
     background-image: url(assets/backgrounds/productcardback.PNG);
     text-align: center;
     min-width: 0;
-}
-#sword-card img {
-    width: 80%;
-    max-width: 100%;
-    height: auto;
-    transform: rotate(35deg);
-}
-#chainmail-card img {
-    width: 80%;
-    max-width: 100%;
-    height: auto;
 }
 .product-card button {
     padding: 8px 15px;
@@ -381,8 +373,8 @@ header button {
     display: inline-grid;
     width: 58px;
     min-width: 58px;
-    height: 51px;
-    min-height: 51px;
+    height: 58px;
+    min-height: 58px;
     place-items: center;
     padding: 1px;
     border: 0;
@@ -394,11 +386,17 @@ header button {
 header button:hover {
     background: rgba(255, 248, 237, 0.1);
     box-shadow: none;
+    transform: none;
+}
+
+header button:active {
+    transform: none;
 }
 
 header button img {
-    width: 50px;
-    height: 50px;
+    width: auto;
+    height: 56px;
+    max-width: 100%;
     object-fit: contain;
 }
 
@@ -471,7 +469,7 @@ main:not(.customer-tracking-main):not(.admin-main):not(.gunter-gate-main) {
     min-height: 320px;
     flex-direction: column;
     align-items: center;
-    padding: 16px;
+    padding: 10px;
     overflow: hidden;
     border: 1px solid rgba(240, 194, 127, 0.6);
     border-radius: 5px;
@@ -508,8 +506,19 @@ main:not(.customer-tracking-main):not(.admin-main):not(.gunter-gate-main) {
     filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55));
 }
 
+#sword-card img,
+#chainmail-card img {
+    width: calc(100% + 10px);
+    height: 200px;
+    margin-bottom: 1px;
+}
+
+#sword-card img {
+    transform: rotate(30deg);
+}
+
 .product-card h2 {
-    margin: 4px 0;
+    margin: auto 0 4px;
     color: #fff8ed;
     font-size: 1.35rem;
 }
@@ -523,7 +532,7 @@ main:not(.customer-tracking-main):not(.admin-main):not(.gunter-gate-main) {
 
 .product-card button {
     width: 100%;
-    margin-top: auto;
+    margin-top: 0;
 }
 
 body[data-product] > section {
@@ -544,7 +553,7 @@ body[data-product] > section {
 body[data-product] > section > h1 {
     grid-column: 1 / -1;
     margin: 0 0 8px;
-    text-align: left;
+    text-align: center;
 }
 
 body[data-product] > section > .product-image-page {
@@ -585,7 +594,13 @@ body[data-product] > section > button {
 body[data-product] > h1 {
     width: min(980px, calc(100% - 32px));
     margin: 34px auto 14px;
-    text-align: left;
+    text-align: center;
+}
+
+body[data-product] > .product-image-page {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 body[data-product] > h4,
@@ -953,6 +968,37 @@ body > nav:not(.admin-nav) button img {
     object-fit: contain;
 }
 
+body > nav:not(.admin-nav) button:first-child {
+    height: 76px;
+    min-height: 76px;
+    padding: 2px;
+}
+
+body > nav:not(.admin-nav) button:first-child img {
+    width: 66px;
+    height: 66px;
+}
+
+body > nav:not(.admin-nav) button.nav-icon-label,
+.admin-nav .nav-icon-label {
+    min-height: 76px;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+    font-size: 0.7rem;
+}
+
+body > nav:not(.admin-nav) button.nav-icon-label img,
+.admin-nav .nav-icon-label img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.nav-icon-label span {
+    line-height: 1.05;
+}
+
 .admin-nav a[aria-current="page"] {
     color: var(--forge-gold-light);
 }
@@ -995,13 +1041,13 @@ body > nav:not(.admin-nav) button img {
     header button {
         width: 48px;
         min-width: 48px;
-        height: 47px;
-        min-height: 47px;
+        height: 52px;
+        min-height: 52px;
     }
 
     header button img {
-        width: 42px;
-        height: 42px;
+        width: 48px;
+        height: 48px;
     }
 
     .hero {
@@ -1028,6 +1074,11 @@ body > nav:not(.admin-nav) button img {
 
     .product-card img {
         height: 142px;
+    }
+
+    #sword-card img,
+    #chainmail-card img {
+        height: 152px;
     }
 
     body[data-product] > section {
@@ -1122,7 +1173,7 @@ body > nav:not(.admin-nav) button img {
 
 :root {
     --header-height: 72px;
-    --footer-height: 70px;
+    --footer-height: 100px;
 }
 
 body {
@@ -1174,7 +1225,7 @@ body > nav.admin-nav[aria-label="Store navigation"] {
 }
 
 body.home-page {
-    padding: 0;
+    padding: 0 0 var(--footer-height);
     background: #211812;
 }
 
@@ -1273,7 +1324,7 @@ body.home-page .products {
 @media (max-width: 700px) {
     :root {
         --header-height: 64px;
-        --footer-height: 72px;
+        --footer-height: 100px;
     }
 
     body.home-page .hero::before {
