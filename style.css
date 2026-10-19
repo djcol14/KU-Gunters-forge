@@ -468,9 +468,17 @@ header button:active {
 header button img {
     position: relative;
     z-index: 1;
-    width: 56px;
-    height: 56px;
     object-fit: contain;
+}
+
+header button:first-child img {
+    width: 66px;
+    height: 66px;
+}
+
+header button:last-child img {
+    width: 66px;
+    height: 53px;
 }
 
 header .workshop-label {
@@ -1145,9 +1153,14 @@ body > nav.store-nav button:last-child img {
         right: 2px;
     }
 
-    header button img {
-        width: 44px;
-        height: 44px;
+    header button:first-child img {
+        width: 54px;
+        height: 54px;
+    }
+
+    header button:last-child img {
+        width: 53px;
+        height: 43px;
     }
 
     header button:first-child::before {
