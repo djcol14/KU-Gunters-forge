@@ -466,7 +466,9 @@ header button:active {
 }
 
 header button img {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     z-index: 1;
     object-fit: contain;
 }
@@ -475,14 +477,14 @@ header button:first-child img {
     width: 115.88px;
     height: 79.84px;
     object-fit: fill;
-    transform: translate(-5.07px, 0.66px);
+    transform: translate(calc(-50% - 5.07px), calc(-50% + 0.66px));
 }
 
 header button:last-child img {
     width: 97.36px;
     height: 73.54px;
     object-fit: fill;
-    transform: translate(1.55px, 0.52px);
+    transform: translate(calc(-50% + 1.55px), calc(-50% + 0.52px));
 }
 
 header .workshop-label {
@@ -1160,13 +1162,13 @@ body > nav.store-nav button:last-child img {
     header button:first-child img {
         width: 94.81px;
         height: 65.33px;
-        transform: translate(-4.15px, 0.54px);
+        transform: translate(calc(-50% - 4.15px), calc(-50% + 0.54px));
     }
 
     header button:last-child img {
         width: 78.19px;
         height: 59.66px;
-        transform: translate(1.25px, 0.42px);
+        transform: translate(calc(-50% + 1.25px), calc(-50% + 0.42px));
     }
 
     header button:first-child::before {
