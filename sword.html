@@ -12,7 +12,11 @@
         <button onclick="window.history.back()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
         </button>
-        <h2>Gunter's Forge</h2>
+        <div class="header-brand">
+            <img class="header-squiggle header-squiggle-left" src="assets/icons/squiggle.PNG" alt="">
+            <h2>Gunter's Forge</h2>
+            <img class="header-squiggle header-squiggle-right" src="assets/icons/squiggle.PNG" alt="">
+        </div>
         <button onclick="opencart()">
             <img src="assets/icons/carticon.PNG" alt="Cart Logo" width="50">
         </button>
@@ -36,19 +40,10 @@
     <button type="button" onclick="addtocart('sword')">Add to Cart</button>
 
     </section>
-    <nav>
-        <button onclick="navindex()">
-            <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
-        </button>
-        <button>Shop</button>
-        <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'">
-            <img src="assets/icons/ordertrackingicon.PNG" alt="Order Tracking Logo" width="50">
-            <span>Order Tracking</span>
-        </button>
-        <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'">
-            <img src="assets/icons/guntersaccessicon.PNG" alt="Gunter's Access Logo" width="50">
-            <span>Gunter's Access</span>
-        </button>
+    <nav class="store-nav" aria-label="Store navigation">
+           <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
+        <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
+        <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
     </nav>
     <script src="script.js"></script>
 </body>

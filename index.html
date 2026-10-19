@@ -8,10 +8,14 @@
 </head>
 <body class="home-page">
     <header>
-        <button>
-            <img src="assets/icons/homeicon.PNG" alt="Home Logo">
+        <button type="button" onclick="navindex()" aria-label="Home">
+            <img src="assets/icons/homeicon.PNG" alt="">
         </button>
-        <h1>Gunter's Forge</h1>
+        <div class="header-brand">
+            <img class="header-squiggle header-squiggle-left" src="assets/icons/squiggle.PNG" alt="">
+            <h1>Gunter's Forge</h1>
+            <img class="header-squiggle header-squiggle-right" src="assets/icons/squiggle.PNG" alt="">
+        </div>
         <button onclick="opencart()">
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
@@ -21,8 +25,9 @@
             <img class="hero-background" src="assets/backgrounds/ForgeBackground.PNG" alt="Forge Background">
             <img class="hero-gunter" src="assets/logos/gunter.PNG" alt="Gunter the blacksmith">
             <div class="gunter-intro">
+            <img class="intro-scroll" src="assets/backgrounds/textbox.PNG" alt="">
             <h1>Welcome to Gunter's Forge!</h1>
-            <p>Quality goods for adventures, by Gunter himself.</p>
+            <p>Quality goods for adventures, made by Gunter himself.</p>
             </div>
         </section>
         <section class="products">
@@ -52,11 +57,8 @@
             </div>
         </section>
     </main>
-    <nav>
-        <button onclick="navindex()">
-            <img src="assets/icons/homeicon.PNG" alt="Home Logo" width="50">
-        </button>
-        <button>Shop</button>
+    <nav class="store-nav" aria-label="Store navigation">
+        <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'">
             <img src="assets/icons/ordertrackingicon.PNG" alt="Order Tracking Logo" width="50">
             <span>Order Tracking</span>
