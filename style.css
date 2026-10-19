@@ -440,6 +440,11 @@ header button::before {
     transition: none;
 }
 
+header button:first-child::before {
+    width: 68px;
+    height: 68px;
+}
+
 header button:last-child::before {
     width: 68px;
     height: 55px;
@@ -470,10 +475,6 @@ header button img {
 
 header button:first-child img {
     transform: translate(-10px, -2px);
-}
-
-header button:last-child img {
-    transform: translate(-10px, -5px);
 }
 
 header .workshop-label {
@@ -1154,8 +1155,8 @@ body > nav.store-nav button:last-child img {
     }
 
     header button:first-child::before {
-        width: 36px;
-        height: 52px;
+        width: 56px;
+        height: 56px;
     }
 
     header button:last-child::before {
@@ -1165,10 +1166,6 @@ body > nav.store-nav button:last-child img {
 
     header button:first-child img {
         transform: translateX(-6px);
-    }
-
-    header button:last-child img {
-        transform: translate(-6px, -4px);
     }
 
     .hero {
@@ -1564,5 +1561,4 @@ body.home-page .products {
     }
 
 }
-
 
