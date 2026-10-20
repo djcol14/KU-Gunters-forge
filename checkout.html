@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- header with back button, store name, and cart button -->
     <header>
         <button onclick="window.history.back()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -20,6 +22,7 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
     </header>
+    <!-- checkout form containing the order review and customer details -->
     <main>
         <form id="checkout-form" onsubmit="placeOrder(event)">
             <section class="checkout-review">
@@ -32,6 +35,7 @@
                 <button type="submit">Place Order</button>
             </section>
         </form>
+        <!-- dialog warning that the order may be delayed due to missing materials -->
         <dialog id="material-shortage-dialog" class="material-shortage-dialog">
             <p>This order may take longer than expected because Gunter needs to gather materials.</p>
             <form method="dialog">
@@ -40,11 +44,13 @@
             </form>
         </dialog>
     </main>
+    <!-- bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
            <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
     </nav>
     <script src="script.js"></script>
+    <!-- connects the JavaScript file -->
 </body>
 </html>
