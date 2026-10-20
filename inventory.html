@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forge Inventory | Gunter's Forge</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Connects the stylesheet -->
 </head>
 <body data-gunter-protected>
+       <!-- Header with back button, store name, and cart button -->
     <header>
         <button type="button" onclick="window.location.href='gunter.html'" aria-label="Back to Gunter panel">
             <img src="assets/icons/backarrow.PNG" alt="">
@@ -20,26 +23,32 @@
             <img src="assets/icons/carticon.PNG" alt="">
         </button>
     </header>
+      <!-- Main inventory management area -->
     <main class="admin-main">
         <p class="admin-eyebrow">GUNTER'S WORKSHOP</p>
         <h1>Material inventory</h1>
         <button type="button" class="admin-secondary-button" onclick="logoutGunter()">Lock workshop</button>
         <p>Stock is deducted when an order enters the forging stage.</p>
         <p id="inventory-message" class="admin-message" role="status" aria-live="polite"></p>
+          <!-- Displays inventory items and allows stock levels to be saved -->
         <form id="inventory-form">
             <div id="inventory-list" class="inventory-list"></div>
             <button class="admin-primary-button" type="submit">Save stock levels</button>
         </form>
+        
+        <!-- Shows the materials required to make each product -->
         <section class="inventory-recipes-section" aria-labelledby="recipes-heading">
             <h2 id="recipes-heading">Material use per item</h2>
             <div id="inventory-recipes" class="inventory-recipes"></div>
         </section>
     </main>
+        <!-- Bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
            <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
     </nav>
     <script src="script.js"></script>
+    <!-- Connects the JavaScript file -->
 </body>
 </html>
