@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gunter's Forge</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Connects the stylesheet -->
 </head>
 <body class="home-page">
+      <!-- Header with home button, store name, and cart button -->
     <header>
         <button type="button" onclick="navindex()" aria-label="Home">
             <img src="assets/icons/homeicon.PNG" alt="">
@@ -20,6 +23,7 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
     </header>
+       <!-- Welcome section with the forge background, Gunter, and introduction -->
     <main>
         <section class="hero">
             <img class="hero-background" src="assets/backgrounds/ForgeBackground.PNG" alt="Forge Background">
@@ -30,6 +34,7 @@
             <p>Quality goods for adventures, made by Gunter himself.</p>
             </div>
         </section>
+           <!-- Product cards with images, prices, and links to product details -->
         <section class="products">
             <div class="product-card" id="sword-card" onclick="openProduct('sword')">
                 <img src="assets/products/swordproduct.PNG" alt="Sword">
@@ -57,6 +62,7 @@
             </div>
         </section>
     </main>
+      <!-- Bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
         <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'">
@@ -69,5 +75,6 @@
         </button>
     </nav>
     <script src="script.js"></script>
+    <!-- Connects the JavaScript file -->
 </body>
 </html>
