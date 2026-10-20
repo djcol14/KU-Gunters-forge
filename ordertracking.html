@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Track an Order | Gunter's Forge</title>
 	<link rel="stylesheet" href="style.css">
+	<!-- Connects the stylesheet -->
 </head>
 <body class="customer-tracking-page">
+	  <!-- Header with home button, store name, and cart button -->
 	<header>
 		<button type="button" onclick="navindex()" aria-label="Back to home">
 			<img src="assets/icons/backarrow.PNG" alt="">
@@ -20,6 +23,7 @@
 			<img src="assets/icons/carticon.PNG" alt="">
 		</button>
 	</header>
+	  <!-- Main order tracking area with search form and results -->
 	<main class="customer-tracking-main">
 		<h1>Track your order</h1>
 		<p>Enter the customer name from your confirmation. Add an order number to narrow the search.</p>
@@ -31,13 +35,16 @@
 			<button type="submit">Find order</button>
 			<p id="tracking-message" role="status" aria-live="polite"></p>
 		</form>
+		   <!-- Displays the matching order information -->
 		<section id="tracking-result" class="customer-tracking-result" aria-live="polite" hidden></section>
 	</main>
+	  <!-- Bottom navigation for home, order tracking, and Gunter's access -->
 	<nav class="store-nav" aria-label="Store navigation">
 			<button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
 			<button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
 			<button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
 	</nav>
 	<script src="script.js"></script>
+	<!-- Connects the JavaScript file -->
 </body>
 </html>
