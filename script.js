@@ -169,7 +169,7 @@ function displaycart(){
             let itemDiv = document.createElement("div");
             // sets up the info div to create an html cascade
             let infoDiv = document.createElement("div");
-            infoDiv.textContent = product + " x ";
+            infoDiv.textContent = product;
             let itemTotalPriceDiv = document.createElement("span");
             itemTotalPriceDiv.textContent = itemTotalPrice + " gold";
             let productImage = document.createElement("img");
@@ -224,8 +224,9 @@ function displaycart(){
             controlDiv.appendChild(removeItemButton);
             // sets up the pricing div to display price information
             let pricingDiv = document.createElement("div");
+            pricingDiv.className = "cart-pricing";
             let individualPrice = document.createElement("span");
-            individualPrice.textContent = price + " gold each ";
+            individualPrice.textContent = price + " gold each";
             pricingDiv.appendChild(individualPrice);
             pricingDiv.appendChild(itemTotalPriceDiv);
             infoDiv.appendChild(pricingDiv);
@@ -381,13 +382,12 @@ function placeOrder(event) {
     // cart is passed into function as item parameter
     // loadForgeInventory() gets the forge inventory
     let shortages = getMaterialShortages({ items: cart }, loadForgeInventory());
-    // if there are any material shortages they will be displayed in an alert and the order will not be placed
-    if (shortages.length > 0) {
-        let shortageDetails = shortages.map(function(shortage) {
-            return shortage.name + " (need " + shortage.needed + ", have " + shortage.available + ")";
-        }).join(", ");
-        alert("Not enough materials in stock: " + shortageDetails + ".");
-        // ends function
+    // Warn customers about shortages and let them choose whether to continue.
+    let checkoutForm = document.getElementById("checkout-form");
+    let shortageConfirmed = checkoutForm.dataset.materialShortageConfirmed === "true";
+    delete checkoutForm.dataset.materialShortageConfirmed;
+    if (shortages.length > 0 && !shortageConfirmed) {
+        document.getElementById("material-shortage-dialog").showModal();
         return;
     }
     // gets last order number from localStorage or sets it to 1000
@@ -413,6 +413,22 @@ function placeOrder(event) {
     localStorage.setItem("cart", JSON.stringify([]));
     // navigates to the order confirmation page
     window.location.href = "orderconfirmation.html";
+}
+
+function setupMaterialShortageConfirmation() {
+    let dialog = document.getElementById("material-shortage-dialog");
+    let checkoutForm = document.getElementById("checkout-form");
+    if (!dialog || !checkoutForm) {
+        return;
+    }
+
+    dialog.addEventListener("close", function() {
+        if (dialog.returnValue !== "continue") {
+            return;
+        }
+        checkoutForm.dataset.materialShortageConfirmed = "true";
+        checkoutForm.requestSubmit();
+    });
 }
 
 // created with the help of git copilot
@@ -664,9 +680,14 @@ function updateOrderStatus(orderNumber, newStatus) {
         // if there are shortages return a failure message 
         if (shortages.length > 0) {
             let shortageDetails = shortages.map(function(shortage) {
-                return shortage.name + " (need " + shortage.needed + ", have " + shortage.available + ")";
+                let gatherAmount = shortage.needed - shortage.available;
+                return shortage.name + ": gather " + gatherAmount + " more (need " +
+                    shortage.needed + ", have " + shortage.available + ")";
             }).join(", ");
-            return { success: false, message: "Not enough materials to forge this order: " + shortageDetails + "." };
+            return {
+                success: false,
+                message: "This order cannot move to Forging yet. Gather these materials first: " + shortageDetails + "."
+            };
         }
         // takes the materials from the inventory
         Object.keys(materialNeeds).forEach(function(material) {
@@ -859,35 +880,86 @@ function setupOrderTracking() {
         event.preventDefault();
         let customerName = document.getElementById("tracking-customer-name").value.trim().toLocaleLowerCase();
         let orderNumber = document.getElementById("tracking-order-number").value.trim().replace(/^#/, "");
-        let orders = JSON.parse(localStorage.getItem("orders")) || [];
-        let order = orders.find(function(savedOrder) {
-            return String(savedOrder.orderNumber) === orderNumber &&
-                String(savedOrder.customerName || "").trim().toLocaleLowerCase() === customerName;
-        });
         let result = document.getElementById("tracking-result");
         let message = document.getElementById("tracking-message");
+        result.replaceChildren();
 
-        if (!order) {
+        if (!customerName) {
             result.hidden = true;
-            message.textContent = "We couldn't find an order matching that name and number. Check both and try again.";
+            message.textContent = "Enter a customer name to find orders. You can also add an order number to narrow the search.";
             return;
         }
 
-        document.getElementById("tracking-result-number").textContent = order.orderNumber;
-        document.getElementById("tracking-result-name").textContent = order.customerName;
-        document.getElementById("tracking-result-status").textContent = order.status;
-        let queuePosition = getQueuePosition(order.orderNumber);
-        let queueMessage = document.getElementById("tracking-queue-position");
-        if (queuePosition > 0) {
-            queueMessage.textContent = "Queue position: " + queuePosition;
-        } else if (order.status === "Ready") {
-            queueMessage.textContent = "Your order is ready for pickup.";
-        } else if (order.status === "Completed") {
-            queueMessage.textContent = "This order has been completed.";
-        } else {
-            queueMessage.textContent = "This order is not currently in the active queue.";
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+        let matchingOrders = orders.filter(function(savedOrder) {
+            let orderNumberMatches = !orderNumber || String(savedOrder.orderNumber) === orderNumber;
+            let customerNameMatches =
+                String(savedOrder.customerName || "").trim().toLocaleLowerCase() === customerName;
+            return orderNumberMatches && customerNameMatches;
+        });
+
+        if (matchingOrders.length === 0) {
+            result.hidden = true;
+            message.textContent = "We couldn't find an order matching that name or number. Check your details and try again.";
+            return;
         }
-        message.textContent = "Order found.";
+
+        matchingOrders.forEach(function(order) {
+            let orderResult = document.createElement("article");
+            orderResult.className = "customer-tracking-order";
+
+            let orderHeading = document.createElement("h2");
+            orderHeading.textContent = "Order #" + order.orderNumber;
+            orderResult.appendChild(orderHeading);
+
+            let customer = document.createElement("p");
+            customer.textContent = "Customer: " + (order.customerName || "");
+            orderResult.appendChild(customer);
+
+            let status = document.createElement("p");
+            status.textContent = "Status: ";
+            let statusValue = document.createElement("strong");
+            statusValue.textContent = order.status;
+            status.appendChild(statusValue);
+            orderResult.appendChild(status);
+
+            let queuePosition = getQueuePosition(order.orderNumber);
+            let queueMessage = document.createElement("p");
+            if (queuePosition > 0) {
+                queueMessage.textContent = "Queue position: " + queuePosition;
+            } else if (order.status === "Ready") {
+                queueMessage.textContent = "Your order is ready for pickup.";
+            } else if (order.status === "Completed") {
+                queueMessage.textContent = "This order has been completed.";
+            } else {
+                queueMessage.textContent = "This order is not currently in the active queue.";
+            }
+            orderResult.appendChild(queueMessage);
+
+            let itemsHeading = document.createElement("h3");
+            itemsHeading.textContent = "Items";
+            orderResult.appendChild(itemsHeading);
+
+            let itemsList = document.createElement("div");
+            itemsList.className = "order-items";
+            (order.items || []).forEach(function(item) {
+                let itemDescription = document.createElement("p");
+                let productName = products[item.product] ? products[item.product].name : item.product;
+                itemDescription.textContent = productName + " x " + item.quantity;
+                itemsList.appendChild(itemDescription);
+            });
+            if (itemsList.childElementCount === 0) {
+                let noItems = document.createElement("p");
+                noItems.textContent = "No item details available.";
+                itemsList.appendChild(noItems);
+            }
+            orderResult.appendChild(itemsList);
+            result.appendChild(orderResult);
+        });
+
+        message.textContent = matchingOrders.length === 1
+            ? "Order found."
+            : "Found " + matchingOrders.length + " orders.";
         result.hidden = false;
     });
 }
@@ -923,4 +995,4 @@ if (hasGunterAccess) {
 }
 setupGunterLogin();
 setupOrderTracking();
-
+setupMaterialShortageConfirmation();

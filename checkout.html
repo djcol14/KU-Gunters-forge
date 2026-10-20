@@ -32,6 +32,13 @@
                 <button type="submit">Place Order</button>
             </section>
         </form>
+        <dialog id="material-shortage-dialog" class="material-shortage-dialog">
+            <p>This order may take longer than expected because Gunter needs to gather materials.</p>
+            <form method="dialog">
+                <button type="submit" value="cancel">Cancel</button>
+                <button type="submit" value="continue">Continue</button>
+            </form>
+        </dialog>
     </main>
     <nav class="store-nav" aria-label="Store navigation">
            <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
