@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gunter's Forge Orders</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Connects the stylesheet -->
 </head>
 <body data-gunter-protected>
+        <!-- Header with back button, store name, and cart button -->
     <header>
         <button onclick="window.location.href='gunter.html'">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -20,13 +23,14 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
     </header>
+        <!-- Displays the orders managed by Gunter -->
     <main>
         <h1>Gunter's Orders</h1>
         <div class="orders-list">
             <!-- Orders will be populated by JavaScript -->
         </div>
     </main>
-    
+       <!-- Bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
            <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
