@@ -1,13 +1,15 @@
 <!DOCTYPE html>
+<!-- defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chain Mail Product Page</title>
+    <!-- connects the stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body data-product="chainmail">
-    
+    <!-- header with back button, store name, and cart button -->
     <header>
         <button onclick="window.history.back()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -21,13 +23,13 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
     </header>
-
+<!-- product details, description, price, and purchasing controls -->
     <section>
     <h1>Chain Mail</h1>
     <img class="product-image-page" id="chainmail-image-page" src="assets/products/chainmailproduct.PNG" alt="Chainmail Shirt">
     <p>Chain mail is a type of body armor made of interlocking metal rings. It provides good protection while maintaining flexibility.</p>
     <p>Price = 100 Gold Pieces</p>
-
+<!-- allows the customer to change the quantity -->
     <div class="quantity-selector">
         <button type="button" onclick="changeQuantity(-1)">-</button>
         <span id="quantity">1</span>
@@ -38,7 +40,7 @@
 
     <button type="button" onclick="addtocart('chainmail')">Add to Cart</button>
     </section>
-
+<!-- bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
         <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
