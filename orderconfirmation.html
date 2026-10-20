@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order confirmation screen</title>
     <link rel="stylesheet" href="style.css">
+     <!-- Connects the stylesheet -->
 </head>
 <body>
+     <!-- Header with home button, store name, and cart button -->
     <header>
         <button onclick="navindex()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -20,10 +23,12 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo">
         </button>
     </header>
+       <!-- Displays the order confirmation and customer details -->
     <main>
         <h1>Order Placed</h1>
         <p>Your order number is: <span id="order-number">0000</span></p>
         <p>Customer: <span id="order-customer-name"></span></p>
+          <!-- Shows the items included in the order -->
         <section class="order-details">
             <h2>Order Details</h2>
             <p>Items in your order:</p>
@@ -31,6 +36,7 @@
                 <!-- Items will be populated by JavaScript -->
             </ul>
         </section>
+          <!-- Displays the order total and thank you message -->
         <section class="order-total">
             <h2>Order Total</h2>
             <p>Total: <span id="order-total">0</span> gold</p>
@@ -39,7 +45,7 @@
         <p><a href="ordertracking.html">Track this order</a></p>
         
     </main>
-
+   <!-- Bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
            <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
@@ -47,5 +53,6 @@
     </nav>
 
     <script src="script.js"></script>
+    <!-- Connects the JavaScript file -->
 </body>
 </html>
