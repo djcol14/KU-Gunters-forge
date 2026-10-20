@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cooking Pot Product Page</title>
+    <!-- Connects the stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body data-product="cookingpot">
+    <!-- Header with back button, store name, and cart button -->
     <header>
         <button onclick="window.history.back()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -20,11 +23,13 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo" width="50">
         </button>
     </header>
+      <!-- Product details, description, price, and purchasing controls -->
     <section>
     <h1>Cooking Pot</h1>
     <img class="product-image-page" id="cookingpot-image-page" src="assets/products/cookingpotproduct.PNG" alt="Cooking Pot">
     <p>Cooking pots are essential for keeping your health and strength up, allowing you to cook meals and boil water for purification.</p>
     <p>Price = 25 Gold Pieces</p>
+    <!-- Allows the customer to change the quantity -->
     <div class="quantity-selector">
         <button type="button" onclick="changeQuantity(-1)">-</button>
         <span id="quantity">1</span>
@@ -35,12 +40,13 @@
 
     <button type="button" onclick="addtocart('cookingpot')">Add to Cart</button>
     </section>
-    
+       <!-- Bottom navigation for home, order tracking, and Gunter's access -->
     <nav class="store-nav" aria-label="Store navigation">
         <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
     </nav>
     <script src="script.js"></script>
+    <!-- Connects the JavaScript file -->
     </body>
 </html>
