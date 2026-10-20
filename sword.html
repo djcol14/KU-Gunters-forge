@@ -1,13 +1,15 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sword Product Page</title>
     <link rel="stylesheet" href="style.css">
+       <!-- Connects the stylesheet -->
 </head>
 <body data-product="sword">
-    
+    <!-- Header with home button, store name, and cart button -->
     <header>
         <button onclick="window.history.back()">
             <img src="assets/icons/backarrow.PNG" alt="Back Button">
@@ -21,24 +23,24 @@
             <img src="assets/icons/carticon.PNG" alt="Cart Logo" width="50">
         </button>
     </header>
-
+<!-- Sword details, price, and purchase options -->
     <section>
     <h1>Sword</h1>
     <img class="product-image-page" id="sword-image-page" src="assets/products/swordproduct.PNG" alt="Sword Image">
     <p>A sharp and sturdy sword for combat. Can be used for both melee and ranged attacks.</p>
     <p>Price = 75 Gold Pieces</p>
     
-
+<!-- Allows the customer to change the quantity -->
     <div class="quantity-selector">
         <button type="button" onclick="changeQuantity(-1)">-</button>
         <span id="quantity">1</span>
         <button type="button" onclick="changeQuantity(1)">+</button>
     </div>
-
+<!-- Displaus the total price based on quantity -->
     <p>Total Price: <span id="total-price">0.00</span> gold</p>
 
     <button type="button" onclick="addtocart('sword')">Add to Cart</button>
-
+<!-- Adds the selected sword quantity to the cart -->
     </section>
     <nav class="store-nav" aria-label="Store navigation">
            <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
@@ -46,5 +48,6 @@
         <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
     </nav>
     <script src="script.js"></script>
+     <!-- Connects the JavaScript file -->
 </body>
 </html>
