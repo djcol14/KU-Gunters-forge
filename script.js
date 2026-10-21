@@ -414,18 +414,24 @@ function placeOrder(event) {
     // navigates to the order confirmation page
     window.location.href = "orderconfirmation.html";
 }
-
+ 
+// created with the help of git copilot
+// all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
 function setupMaterialShortageConfirmation() {
     let dialog = document.getElementById("material-shortage-dialog");
     let checkoutForm = document.getElementById("checkout-form");
+    // if the elements arent created end function
     if (!dialog || !checkoutForm) {
         return;
     }
-
+    
+    // attaches the event listener to the dialog for the users response
     dialog.addEventListener("close", function() {
+        // if the user chooses not to continue stop the function
         if (dialog.returnValue !== "continue") {
             return;
         }
+        // if the user continues submit the form and continue with the checkout process
         checkoutForm.dataset.materialShortageConfirmed = "true";
         checkoutForm.requestSubmit();
     });
@@ -797,43 +803,57 @@ function renderForgeInventory() {
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// sets up the forge inventory and handles the saving of stock levels to local storage
 function setupForgeInventory() {
     let inventoryForm = document.getElementById("inventory-form");
     if (!inventoryForm) {
         return;
     }
+    // displays the current inventory levels and recipes
     renderForgeInventory();
+    // attaches a submit event listener to the inventory form to save stock levels
     inventoryForm.addEventListener("submit", function(event) {
+        // prevents page from refreshing when form is submitted
         event.preventDefault();
         let inventory = loadForgeInventory();
+        // loops throught each material in inventory
         Object.keys(inventory).forEach(function(material) {
+            // finds the input for the material
             let input = inventoryForm.elements.namedItem(material);
             let value = Number(input.value);
+            // ensures the value is within the valid range of 0 to capacity
             inventory[material].stock = Number.isFinite(value)
                 ? Math.max(0, Math.min(inventory[material].capacity, value))
                 : 0;
         });
+        // saves updated info to local storage
         localStorage.setItem("forgeInventory", JSON.stringify(inventory));
         document.getElementById("inventory-message").textContent = "Stock levels saved.";
+        // rebuilds the inventory display with updated stock levels
         renderForgeInventory();
     });
 }
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// checks whether the user has access to Gunter's panel
 function requireGunterAccess() {
+    // checks weather Gunters access is required
     if (!document.body.hasAttribute("data-gunter-protected")) {
         return true;
     }
+    // checks if the user had been granted access in the current session
     if (sessionStorage.getItem("gunterAccess") === "granted") {
         return true;
     }
+    // if access has not been granted redirect to the login page
     window.location.replace("gunter.html");
     return false;
 }
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// handles the setup of Gunter's login form and access granting
 function setupGunterLogin() {
     let loginForm = document.getElementById("gunter-login-form");
     if (!loginForm) {
@@ -841,13 +861,17 @@ function setupGunterLogin() {
     }
     let dashboard = document.getElementById("gunter-dashboard");
     let message = document.getElementById("gunter-login-message");
+    // establishes the function to hide the login form and show the dashboard
     let showDashboard = function() {
         loginForm.hidden = true;
         dashboard.hidden = false;
     };
+    // if the user has been granted access in the current session, show the dashboard
     if (sessionStorage.getItem("gunterAccess") === "granted") {
         showDashboard();
     }
+    // attaches a submit event listener to the login form
+    // checks if the password is correct and grants access if it is 
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault();
         let password = document.getElementById("gunter-password").value;
@@ -857,12 +881,14 @@ function setupGunterLogin() {
         }
         sessionStorage.setItem("gunterAccess", "granted");
         message.textContent = "Access granted.";
+        // shows the dashboard using function defined earlier
         showDashboard();
     });
 }
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// handles the logout of Gunter by removing access from the session and redirecting to the login page
 function logoutGunter() {
     sessionStorage.removeItem("gunterAccess");
     window.location.href = "gunter.html";
@@ -870,27 +896,35 @@ function logoutGunter() {
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// sets up the ordertracking feature and the the order tracking page
 function setupOrderTracking() {
     let trackingForm = document.getElementById("tracking-form");
+    // if the tracking form doesn't exist stop the function
     if (!trackingForm) {
         return;
     }
 
+    // adds an event listener to the tracking form for handling form submission
     trackingForm.addEventListener("submit", function(event) {
+        // prevents the page from reloading on form submission
         event.preventDefault();
         let customerName = document.getElementById("tracking-customer-name").value.trim().toLocaleLowerCase();
         let orderNumber = document.getElementById("tracking-order-number").value.trim().replace(/^#/, "");
         let result = document.getElementById("tracking-result");
         let message = document.getElementById("tracking-message");
+        // clears any previous tracking results
         result.replaceChildren();
 
+        // if there is no customer name a result cannot be shown and the function ends early
         if (!customerName) {
             result.hidden = true;
             message.textContent = "Enter a customer name to find orders. You can also add an order number to narrow the search.";
             return;
         }
 
+        // retrieves all orders from local storage and turns them into an array
         let orders = JSON.parse(localStorage.getItem("orders")) || [];
+        // filters the orders to find those that match the customer name and order number
         let matchingOrders = orders.filter(function(savedOrder) {
             let orderNumberMatches = !orderNumber || String(savedOrder.orderNumber) === orderNumber;
             let customerNameMatches =
@@ -898,12 +932,15 @@ function setupOrderTracking() {
             return orderNumberMatches && customerNameMatches;
         });
 
+        // if no matching orders are found hide the result and show a message
         if (matchingOrders.length === 0) {
             result.hidden = true;
             message.textContent = "We couldn't find an order matching that name or number. Check your details and try again.";
             return;
         }
 
+        // if there are matching orders they are displayed in the result section
+        // loops over each matching order and creates an HTML element to display its details
         matchingOrders.forEach(function(order) {
             let orderResult = document.createElement("article");
             orderResult.className = "customer-tracking-order";
@@ -923,6 +960,7 @@ function setupOrderTracking() {
             status.appendChild(statusValue);
             orderResult.appendChild(status);
 
+            // retrieves the queue position for the current order and displays a message based on it
             let queuePosition = getQueuePosition(order.orderNumber);
             let queueMessage = document.createElement("p");
             if (queuePosition > 0) {
@@ -931,6 +969,7 @@ function setupOrderTracking() {
                 queueMessage.textContent = "Your order is ready for pickup.";
             } else if (order.status === "Completed") {
                 queueMessage.textContent = "This order has been completed.";
+                // protects against edge cases where the order is completed but still shows a queue position
             } else {
                 queueMessage.textContent = "This order is not currently in the active queue.";
             }
@@ -942,12 +981,14 @@ function setupOrderTracking() {
 
             let itemsList = document.createElement("div");
             itemsList.className = "order-items";
+            // loops over each item in the order and creates an HTML element to display its details
             (order.items || []).forEach(function(item) {
                 let itemDescription = document.createElement("p");
                 let productName = products[item.product] ? products[item.product].name : item.product;
                 itemDescription.textContent = productName + " x " + item.quantity;
                 itemsList.appendChild(itemDescription);
             });
+            // if no items are found display message saying that no item details are available
             if (itemsList.childElementCount === 0) {
                 let noItems = document.createElement("p");
                 noItems.textContent = "No item details available.";
@@ -957,6 +998,7 @@ function setupOrderTracking() {
             result.appendChild(orderResult);
         });
 
+        // updates the message to show the number of order found
         message.textContent = matchingOrders.length === 1
             ? "Order found."
             : "Found " + matchingOrders.length + " orders.";
@@ -966,33 +1008,41 @@ function setupOrderTracking() {
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// checks if the user has access to Gunter's features (true or false)
 let hasGunterAccess = requireGunterAccess();
 
+// if the user has access display the orders list if it exists
 if (hasGunterAccess && document.querySelector(".orders-list")) {
     displayOrders();
 }
 
+// if item list exists display the cart
 if (document.querySelector(".item-list")) {
     displaycart();
 }
 
+// if the page is shown again, refresh the cart if it exists
 window.addEventListener("pageshow", function() {
     if (document.querySelector(".item-list")) {
         displaycart();
     }
 });
 
+// if order details exist, display the order confirmation
 if (document.querySelector(".order-details")) {
     displayOrderConfirmation();
 }
         
+// if checkout review exists, display the checkout page
 if (document.querySelector(".checkout-review")) {
     displayCheckout();
 }
 
+// if the user has access, set up the forge inventory
 if (hasGunterAccess) {
     setupForgeInventory();
 }
+// run all three function upon opening the app
 setupGunterLogin();
 setupOrderTracking();
 setupMaterialShortageConfirmation();
