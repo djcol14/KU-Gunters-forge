@@ -595,6 +595,28 @@ function loadForgeInventory() {
     return inventory;
 }
 
+function addGatheredMaterials(materialAmounts) {
+    let inventory = loadForgeInventory();
+    let addedMaterials = {};
+
+    Object.keys(forgeInventoryDefaults).forEach(function(material) {
+        let requestedAmount = Number(materialAmounts[material]);
+        if (!Number.isFinite(requestedAmount) || requestedAmount <= 0) {
+            addedMaterials[material] = 0;
+            return;
+        }
+
+        let amount = Math.floor(requestedAmount);
+        let availableCapacity = inventory[material].capacity - inventory[material].stock;
+        let addedAmount = Math.min(amount, availableCapacity);
+        inventory[material].stock += addedAmount;
+        addedMaterials[material] = addedAmount;
+    });
+
+    localStorage.setItem("forgeInventory", JSON.stringify(inventory));
+    return { inventory: inventory, addedMaterials: addedMaterials };
+}
+
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
 // calculates the amount of materials needed to fulfill an order based on quantity and recipes
@@ -750,26 +772,12 @@ function renderForgeInventory() {
         bar.setAttribute("aria-label", stock.name + " stock level");
         row.appendChild(bar);
 
-        // creates the label and input for setting stock units and adds them to the row
-        let label = document.createElement("label");
-        let inputId = "stock-" + material;
-        label.htmlFor = inputId;
-        label.textContent = "Set stock units";
-        let input = document.createElement("input");
-        input.id = inputId;
-        input.name = material;
-        input.type = "number";
-        input.min = "0";
-        input.max = String(stock.capacity);
-        input.step = "1";
-        input.value = String(stock.stock);
-        row.append(label, input);
-
         // adds a warning if the stock is below 20% of the capacity
         if (percent < 20) {
-            let warning = document.createElement("p");
+            let warning = document.createElement("a");
             warning.className = "material-reorder-warning";
-            warning.textContent = "Order " + stock.name.toLowerCase() + " soon";
+            warning.href = "mine.html";
+            warning.textContent = "Gather " + stock.name.toLowerCase() + " in the Mine";
             row.appendChild(warning);
         }
         // adds the entire inventory row to the inventory list
@@ -801,35 +809,12 @@ function renderForgeInventory() {
 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
-// sets up the forge inventory and handles the saving of stock levels to local storage
+// sets up the read-only forge inventory display
 function setupForgeInventory() {
-    let inventoryForm = document.getElementById("inventory-form");
-    if (!inventoryForm) {
+    if (!document.getElementById("inventory-list")) {
         return;
     }
-    // displays the current inventory levels and recipes
     renderForgeInventory();
-    // attaches a submit event listener to the inventory form to save stock levels
-    inventoryForm.addEventListener("submit", function(event) {
-        // prevents page from refreshing when form is submitted
-        event.preventDefault();
-        let inventory = loadForgeInventory();
-        // loops throught each material in inventory
-        Object.keys(inventory).forEach(function(material) {
-            // finds the input for the material
-            let input = inventoryForm.elements.namedItem(material);
-            let value = Number(input.value);
-            // ensures the value is within the valid range of 0 to capacity
-            inventory[material].stock = Number.isFinite(value)
-                ? Math.max(0, Math.min(inventory[material].capacity, value))
-                : 0;
-        });
-        // saves updated info to local storage
-        localStorage.setItem("forgeInventory", JSON.stringify(inventory));
-        document.getElementById("inventory-message").textContent = "Stock levels saved.";
-        // rebuilds the inventory display with updated stock levels
-        renderForgeInventory();
-    });
 }
 
 // created with the help of git copilot
@@ -1044,3 +1029,382 @@ if (hasGunterAccess) {
 setupGunterLogin();
 setupOrderTracking();
 setupMaterialShortageConfirmation();
+
+// created with the help of git copilot
+// all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
+// Local function holds all of the functions for the mining game
+(function () {
+    // ensures the code runs in strict mode which helps catch common errors and mistakes
+    "use strict";
+
+    // defines the size of the grid for the mining game
+    const GRID_SIZE = 7;
+    // creates an item that defined all of the materials that can be gathered in the game
+    const MATERIALS = {
+        iron: { name: forgeInventoryDefaults.iron.name, image: "assets/products/IornMaterial.PNG", label: "Iron" },
+        jewels: { name: forgeInventoryDefaults.jewels.name, image: "assets/products/JewelMaterial.PNG", label: "Gems" },
+        wood: { name: forgeInventoryDefaults.wood.name, image: "assets/products/WoodMaterial.PNG", label: "Wood" },
+        leather: { name: forgeInventoryDefaults.leather.name, image: "assets/products/lethermaterial.PNG", label: "Hide" },
+        padding: { name: forgeInventoryDefaults.padding.name, image: "assets/products/paddingmaterial.PNG", label: "Pad" }
+    };
+    // defines filler tiles to act as a place holder in the mining game grid
+    const SPECIAL_TILES = {
+        caveRock: { name: "Cave rock", image: "assets/products/rockfilleritem.PNG", label: "Rock" },
+        forestFloor: { name: "Forest floor", image: "assets/products/leaffilleritem.PNG", label: "Leaf" },
+        cobblestone: { name: "Cobblestone", image: "assets/products/stoneitem.PNG", label: "Stone" }
+    };
+    // defines an item with all of the locations in the mining game and the items that can be mined in that location
+    const LOCATIONS = {
+        mine: {
+            title: "The Mine",
+            resources: ["iron", "jewels"],
+            tiles: ["iron", "jewels", "caveRock"]
+        },
+        forest: { 
+            title: "The Forest", 
+            resources: ["wood"], 
+            tiles: ["wood", "forestFloor"] 
+        },
+        town: {
+            title: "The Town",
+            resources: ["leather", "padding"],
+            tiles: ["leather", "padding", "cobblestone"]
+        }
+    };
+
+    // retrives the elements from the HTML document for the mining game interface
+    const boardElement = document.getElementById("gathering-board");
+    const messageElement = document.getElementById("gathering-message");
+    const inventoryElement = document.getElementById("gathering-inventory");
+    // if they do not exist end the function
+    if (!boardElement || !messageElement || !inventoryElement) {
+        return;
+    }
+    const locationHeading = document.getElementById("location-heading");
+    // retrives all the location buttons from the HTML document
+    const locationButtons = Array.from(document.querySelectorAll(".gathering-location"));
+    // initializes the game board as an empty array
+    const board = [];
+    // initalizes the collected resources for the current visit to 0
+    const collectedThisVisit = Object.fromEntries(
+        Object.keys(MATERIALS).map(function (material) { 
+            return [material, 0]; 
+        })
+    );
+
+    let activeLocation = "mine";
+    let selectedIndex = null;
+    
+    // creates the inventory display in the HTML document with all 5 items
+    function renderInventory() {
+        // clears the inventory display before rendering the inventory
+        inventoryElement.replaceChildren();
+        // attempts to load the forge inventory from storage
+        try {
+            const inventory = loadForgeInventory();
+            // loops over each material and creates an inventory entry for it
+            Object.keys(MATERIALS).forEach(function (key) {
+                const material = inventory[key];
+                const entry = document.createElement("div");
+                entry.className = "gathering-resource";
+
+                const name = document.createElement("dt");
+                name.textContent = material.name;
+                const amount = document.createElement("dd");
+                amount.textContent = material.stock + " / " + material.capacity +
+                    " in storehouse · +" + collectedThisVisit[key] + " this visit";
+
+                entry.append(name, amount);
+                inventoryElement.appendChild(entry);
+            });
+            // catches errors that occur while loading the forge inventory
+        } catch (error) {
+            inventoryElement.textContent = "Forge inventory could not be loaded.";
+            messageElement.textContent = "Forge inventory could not be loaded: " + error.message;
+        }
+    }
+
+    // selects a random resource from the array of resources
+    function randomResource(resources) {
+        return resources[Math.floor(Math.random() * resources.length)];
+    }
+    
+    // checks if placing a resource at the index would create a match when the board is initialized
+    function createsStartingMatch(index, resource) {
+        // protects the edge cases where the resource is not defined in the MATERIALS object
+        if (!MATERIALS[resource]) {
+            return false;
+        }
+        const row = Math.floor(index / GRID_SIZE);
+        const column = index % GRID_SIZE;
+        return (column >= 2 &&
+                board[index - 1] === resource &&
+                board[index - 2] === resource) ||
+            (row >= 2 &&
+                board[index - GRID_SIZE] === resource &&
+                board[index - GRID_SIZE * 2] === resource);
+    }
+
+    // creates the game board with random resources ensuring that there are no initial matches
+    function createBoard() {
+        board.length = 0;
+        const tiles = LOCATIONS[activeLocation].tiles || LOCATIONS[activeLocation].resources;
+        for (let index = 0; index < GRID_SIZE * GRID_SIZE; index += 1) {
+            let resource;
+            do {
+                resource = randomResource(tiles);
+            } while (createsStartingMatch(index, resource));
+            board.push(resource);
+        }
+        renderBoard();
+    }
+
+    // renders the game board in the HTML document based on the current state of of the board array.
+    function renderBoard() {
+        boardElement.dataset.location = activeLocation;
+        if (boardElement.childElementCount !== board.length) {
+            boardElement.replaceChildren();
+            board.forEach(function () {
+                const tile = document.createElement("button");
+                tile.type = "button";
+                tile.className = "gathering-tile";
+                boardElement.appendChild(tile);
+            });
+        }
+
+        // updates the visual representation of each tile  based on the tile's recource type and the current state
+        board.forEach(function (key, index) {
+            const material = MATERIALS[key] || SPECIAL_TILES[key];
+            const tile = boardElement.children[index];
+            const row = Math.floor(index / GRID_SIZE) + 1;
+            const column = index % GRID_SIZE + 1;
+            tile.classList.toggle("is-selected", index === selectedIndex);
+            tile.classList.toggle("gathering-tile-iron", key === "iron");
+            tile.setAttribute("aria-label", material.name + " tile, row " + row + ", column " + column);
+            tile.replaceChildren();
+
+            // creates the icon and label elements for the tile based on the resource type
+            const icon = document.createElement(material.image ? "img" : "span");
+            icon.className = "gathering-tile-icon";
+            if (key === "iron" || key === "jewels") {
+                icon.classList.add("gathering-tile-icon-" + key);
+            }
+            icon.setAttribute("aria-hidden", "true");
+            if (material.image) {
+                icon.src = material.image;
+                icon.alt = "";
+            } else {
+                icon.textContent = material.icon;
+            }
+            const label = document.createElement("span");
+            label.className = "gathering-tile-label" + (key === "iron" ? " gathering-tile-label-iron" : "");
+            label.setAttribute("aria-hidden", "true");
+            label.textContent = material.label;
+            tile.append(icon, label);
+        });
+    }
+
+    // finds all the matching sets of resources on the game board that include three or more tiles in a row or column
+    // returns a set with all of the indexes of all matching tiles
+    function findMatches() {
+        const matches = new Set();
+        for (let row = 0; row < GRID_SIZE; row += 1) {
+            for (let column = 0; column < GRID_SIZE; column += 1) {
+                const index = row * GRID_SIZE + column;
+                const resource = board[index];
+                if (!MATERIALS[resource]) {
+                    continue;
+                }
+                if (column <= GRID_SIZE - 3 &&
+                        resource === board[index + 1] &&
+                        resource === board[index + 2]) {
+                    let end = column + 2;
+                    while (end + 1 < GRID_SIZE && board[row * GRID_SIZE + end + 1] === resource) {
+                        end += 1;
+                    }
+                    for (let matchColumn = column; matchColumn <= end; matchColumn += 1) {
+                        matches.add(row * GRID_SIZE + matchColumn);
+                    }
+                }
+                if (row <= GRID_SIZE - 3 &&
+                        resource === board[index + GRID_SIZE] &&
+                        resource === board[index + GRID_SIZE * 2]) {
+                    let end = row + 2;
+                    while (end + 1 < GRID_SIZE && board[(end + 1) * GRID_SIZE + column] === resource) {
+                        end += 1;
+                    }
+                    for (let matchRow = row; matchRow <= end; matchRow += 1) {
+                        matches.add(matchRow * GRID_SIZE + column);
+                    }
+                }
+            }
+        }
+        return matches;
+    }
+
+    
+    function awardMatches(matches) {
+        const found = {};
+        matches.forEach(function (index) {
+            const key = board[index];
+            found[key] = (found[key] || 0) + 1;
+        });
+        return found;
+    }
+
+    function dropAndRefill(matches) {
+        for (let column = 0; column < GRID_SIZE; column += 1) {
+            const remaining = [];
+            for (let row = GRID_SIZE - 1; row >= 0; row -= 1) {
+                const index = row * GRID_SIZE + column;
+                if (!matches.has(index)) {
+                    remaining.push(board[index]);
+                }
+            }
+            for (let row = GRID_SIZE - 1; row >= 0; row -= 1) {
+                const index = row * GRID_SIZE + column;
+                board[index] = remaining[GRID_SIZE - 1 - row] ||
+                    randomResource(LOCATIONS[activeLocation].tiles || LOCATIONS[activeLocation].resources);
+            }
+        }
+    }
+
+    function describeHarvest(harvest) {
+        return Object.keys(harvest.found).map(function (key) {
+            const found = harvest.found[key];
+            const stored = harvest.stored[key];
+            return found + " " + MATERIALS[key].name +
+                (stored < found ? " (" + stored + " stored; capacity reached)" : "");
+        }).join(", ");
+    }
+
+    function resolveMatches() {
+        let totalHarvest = {};
+        let cascadeCount = 0;
+        let matches = findMatches();
+
+        while (matches.size > 0 && cascadeCount < 25) {
+            const harvest = awardMatches(matches);
+            Object.keys(harvest).forEach(function (key) {
+                totalHarvest[key] = (totalHarvest[key] || 0) + harvest[key];
+            });
+            dropAndRefill(matches);
+            cascadeCount += 1;
+            matches = findMatches();
+        }
+
+        if (matches.size > 0) {
+            createBoard();
+            messageElement.textContent = "A long chain cleared the board. Your gathered materials were kept.";
+        }
+        renderBoard();
+
+        let collectionResult;
+        try {
+            collectionResult = addGatheredMaterials(totalHarvest);
+        } catch (error) {
+            renderInventory();
+            messageElement.textContent =
+                "The match was cleared, but materials could not be added to forge inventory: " +
+                error.message;
+            return;
+        }
+
+        Object.keys(totalHarvest).forEach(function (key) {
+            totalHarvest[key] = {
+                found: totalHarvest[key],
+                stored: collectionResult.addedMaterials[key]
+            };
+            collectedThisVisit[key] += collectionResult.addedMaterials[key];
+        });
+        renderInventory();
+
+        const details = Object.keys(totalHarvest).map(function (key) {
+            return describeHarvest({
+                found: { [key]: totalHarvest[key].found },
+                stored: { [key]: totalHarvest[key].stored }
+            });
+        }).join("; ");
+        messageElement.textContent = "Well done! Gathered " + details +
+            (cascadeCount > 1 ? " across " + cascadeCount + " matches." : ".");
+    }
+
+    function areNeighbors(firstIndex, secondIndex) {
+        const rowDistance = Math.abs(Math.floor(firstIndex / GRID_SIZE) - Math.floor(secondIndex / GRID_SIZE));
+        const columnDistance = Math.abs((firstIndex % GRID_SIZE) - (secondIndex % GRID_SIZE));
+        return rowDistance + columnDistance === 1;
+    }
+
+    function handleTileClick(event) {
+        const tile = event.target.closest(".gathering-tile");
+        if (!tile || !boardElement.contains(tile)) {
+            return;
+        }
+        const index = Array.prototype.indexOf.call(boardElement.children, tile);
+        if (selectedIndex === null) {
+            selectedIndex = index;
+            renderBoard();
+            messageElement.textContent = "Now choose a neighboring tile to swap.";
+            return;
+        }
+        if (selectedIndex === index) {
+            selectedIndex = null;
+            renderBoard();
+            messageElement.textContent = "Selection cleared. Choose a tile to begin a swap.";
+            return;
+        }
+        if (!areNeighbors(selectedIndex, index)) {
+            selectedIndex = index;
+            renderBoard();
+            messageElement.textContent = "Tiles must be neighbors. Choose an adjacent tile to swap.";
+            return;
+        }
+
+        const firstIndex = selectedIndex;
+        const firstResource = board[firstIndex];
+        board[firstIndex] = board[index];
+        board[index] = firstResource;
+        selectedIndex = null;
+
+        if (findMatches().size === 0) {
+            const swappedResource = board[firstIndex];
+            board[firstIndex] = board[index];
+            board[index] = swappedResource;
+            renderBoard();
+            messageElement.textContent = "That swap did not make a match. Try a different pair.";
+            return;
+        }
+
+        renderBoard();
+        resolveMatches();
+    }
+
+    function changeLocation(location) {
+        if (!LOCATIONS[location] || location === activeLocation) {
+            return;
+        }
+        activeLocation = location;
+        selectedIndex = null;
+        locationHeading.textContent = LOCATIONS[location].title;
+        locationButtons.forEach(function (button) {
+            button.setAttribute("aria-pressed", String(button.dataset.location === location));
+        });
+        createBoard();
+        renderInventory();
+        messageElement.textContent = "You arrived at " + LOCATIONS[location].title +
+            ". Match three or more to gather " +
+            LOCATIONS[location].resources.map(function (key) {
+                return MATERIALS[key].name.toLowerCase();
+            }).join(" and ") + ".";
+    }
+
+    boardElement.addEventListener("click", handleTileClick);
+    locationButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            changeLocation(button.dataset.location);
+        });
+    });
+
+    renderInventory();
+    createBoard();
+}());
