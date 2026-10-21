@@ -414,7 +414,6 @@ function placeOrder(event) {
     // navigates to the order confirmation page
     window.location.href = "orderconfirmation.html";
 }
- 
 // created with the help of git copilot
 // all code reviewed and commented by the developer to ensure functionality and maintain good standing with competition rules
 function setupMaterialShortageConfirmation() {
@@ -424,7 +423,6 @@ function setupMaterialShortageConfirmation() {
     if (!dialog || !checkoutForm) {
         return;
     }
-    
     // attaches the event listener to the dialog for the users response
     dialog.addEventListener("close", function() {
         // if the user chooses not to continue stop the function
@@ -871,7 +869,7 @@ function setupGunterLogin() {
         showDashboard();
     }
     // attaches a submit event listener to the login form
-    // checks if the password is correct and grants access if it is 
+    // checks if the password is correct and grants access if it is
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault();
         let password = document.getElementById("gunter-password").value;
