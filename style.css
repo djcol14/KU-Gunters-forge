@@ -1713,8 +1713,8 @@ body.home-page .products {
 }
 
 .gathering-intro img {
-    width: 76px;
-    height: 88px;
+    width: 86px;
+    height: 100px;
     flex: 0 0 auto;
     object-fit: contain;
     object-position: center bottom;
@@ -1811,7 +1811,6 @@ body.home-page .products {
     object-fit: contain;
     font-size: clamp(1rem, 4.5vw, 1.8rem);
     line-height: 1;
-    transform: translateY(2px);
 }
 
 .gathering-tile-icon-iron {
@@ -1960,8 +1959,8 @@ body.home-page .products {
     }
 
     .gathering-intro img {
-        width: 62px;
-        height: 76px;
+        width: 70px;
+        height: 84px;
     }
 
     .gathering-intro h1 {

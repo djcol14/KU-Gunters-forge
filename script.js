@@ -1042,10 +1042,10 @@ setupMaterialShortageConfirmation();
     // creates an item that defined all of the materials that can be gathered in the game
     const MATERIALS = {
         iron: { name: forgeInventoryDefaults.iron.name, image: "assets/products/IornMaterial.PNG", label: "Iron" },
-        jewels: { name: forgeInventoryDefaults.jewels.name, image: "assets/products/JewelMaterial.PNG", label: "Gems" },
+        jewels: { name: forgeInventoryDefaults.jewels.name, image: "assets/products/JewelMaterial.PNG", label: "Jewels" },
         wood: { name: forgeInventoryDefaults.wood.name, image: "assets/products/WoodMaterial.PNG", label: "Wood" },
-        leather: { name: forgeInventoryDefaults.leather.name, image: "assets/products/lethermaterial.PNG", label: "Hide" },
-        padding: { name: forgeInventoryDefaults.padding.name, image: "assets/products/paddingmaterial.PNG", label: "Pad" }
+        leather: { name: forgeInventoryDefaults.leather.name, image: "assets/products/lethermaterial.PNG", label: "Leather" },
+        padding: { name: forgeInventoryDefaults.padding.name, image: "assets/products/paddingmaterial.PNG", label: "Padding" }
     };
     // defines filler tiles to act as a place holder in the mining game grid
     const SPECIAL_TILES = {
@@ -1242,7 +1242,7 @@ setupMaterialShortageConfirmation();
         return matches;
     }
 
-    
+    // gives the player the harvested materials based on the tiles they matched
     function awardMatches(matches) {
         const found = {};
         matches.forEach(function (index) {
@@ -1252,6 +1252,7 @@ setupMaterialShortageConfirmation();
         return found;
     }
 
+    // takes away the matched tiles and refills the board with new tiles
     function dropAndRefill(matches) {
         for (let column = 0; column < GRID_SIZE; column += 1) {
             const remaining = [];
@@ -1269,6 +1270,7 @@ setupMaterialShortageConfirmation();
         }
     }
 
+    // tells the user how many of each material they gathered and how many were stored
     function describeHarvest(harvest) {
         return Object.keys(harvest.found).map(function (key) {
             const found = harvest.found[key];
@@ -1277,7 +1279,8 @@ setupMaterialShortageConfirmation();
                 (stored < found ? " (" + stored + " stored; capacity reached)" : "");
         }).join(", ");
     }
-
+ 
+    // finishes all of the matches on the board and awards the player the harvested materials
     function resolveMatches() {
         let totalHarvest = {};
         let cascadeCount = 0;
@@ -1329,12 +1332,14 @@ setupMaterialShortageConfirmation();
             (cascadeCount > 1 ? " across " + cascadeCount + " matches." : ".");
     }
 
+    // checks if two tiles are next to each other on the board
     function areNeighbors(firstIndex, secondIndex) {
         const rowDistance = Math.abs(Math.floor(firstIndex / GRID_SIZE) - Math.floor(secondIndex / GRID_SIZE));
         const columnDistance = Math.abs((firstIndex % GRID_SIZE) - (secondIndex % GRID_SIZE));
         return rowDistance + columnDistance === 1;
     }
 
+    // when a tile is clicked the game handles the selection and the swapping of tiles
     function handleTileClick(event) {
         const tile = event.target.closest(".gathering-tile");
         if (!tile || !boardElement.contains(tile)) {
@@ -1379,6 +1384,7 @@ setupMaterialShortageConfirmation();
         resolveMatches();
     }
 
+    // changes the location of the player and updates the board with the appropriate resources for that location
     function changeLocation(location) {
         if (!LOCATIONS[location] || location === activeLocation) {
             return;
@@ -1398,6 +1404,7 @@ setupMaterialShortageConfirmation();
             }).join(" and ") + ".";
     }
 
+    // addd an event listener to the board tile clicks and the change location buttons
     boardElement.addEventListener("click", handleTileClick);
     locationButtons.forEach(function (button) {
         button.addEventListener("click", function () {
@@ -1405,6 +1412,8 @@ setupMaterialShortageConfirmation();
         });
     });
 
+    // runs upon opening the mining game to initalize the display of the inventory and the board
+    // this ensures that the player sees their current resources and the initial board layout
     renderInventory();
     createBoard();
 }());
