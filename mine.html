@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Defines the page as HTML5 and sets the language -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +7,10 @@
     <meta name="theme-color" content="#151b22">
     <title>Gunter's Gathering | Gunter's Forge</title>
     <link rel="stylesheet" href="style.css">
+     <!-- Connects the stylesheet -->
 </head>
 <body>
+       <!-- Header with back button, store name, and cart button -->
     <header>
         <button type="button" onclick="window.location.href='index.html'" aria-label="Back to home">
             <img src="assets/icons/backarrow.PNG" alt="">
@@ -21,8 +24,9 @@
             <img src="assets/icons/carticon.PNG" alt="">
         </button>
     </header>
-
+<!-- Main gathering game content -->
     <main class="gathering-main">
+        <!-- Game introduction and instructions -->
         <section class="gathering-intro" aria-labelledby="game-heading">
             <img src="assets/logos/gunter.PNG" alt="Gunter the blacksmith">
             <div>
@@ -30,33 +34,33 @@
                 <p>Swap neighboring tiles to line up three or more matching resources.</p>
             </div>
         </section>
-
+<!-- Current location and game board -->
         <h2 id="location-heading" class="gathering-location-title">The Mine</h2>
         <div id="gathering-board" class="gathering-board" aria-label="Match three resource tiles"></div>
-
+<!-- Game messages and feedback -->
         <p id="gathering-message" class="gathering-message" role="status" aria-live="polite">
             Choose two neighboring tiles. Match three or more to gather materials.
         </p>
-
+<!-- Player's collected resources -->
         <section aria-labelledby="inventory-heading">
             <h2 id="inventory-heading" class="gathering-location-title">Forge storehouse</h2>
             <dl id="gathering-inventory" class="gathering-inventory"></dl>
         </section>
     </main>
-
+<!-- Buttons for switching gathering locations -->
     <nav class="gathering-locations" aria-label="Gathering locations">
         <button class="gathering-location" type="button" data-location="mine" aria-pressed="true">Mine</button>
         <button class="gathering-location" type="button" data-location="forest" aria-pressed="false">Forest</button>
         <button class="gathering-location" type="button" data-location="town" aria-pressed="false">Town</button>
     </nav>
-
+<!-- Main store navigation -->
     <nav class="store-nav" aria-label="Store navigation">
         <button class="nav-icon-label" type="button" onclick="navindex()" aria-label="Home"><img src="assets/icons/homeicon.PNG" alt=""><span>Home</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='ordertracking.html'"><img src="assets/icons/ordertrackingicon.PNG" alt=""><span>Order Tracking</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='gunter.html'"><img src="assets/icons/guntersaccessicon.PNG" alt=""><span>Gunter's Access</span></button>
         <button class="nav-icon-label" type="button" onclick="window.location.href='mine.html'" aria-label="Mine" aria-current="page"><img class="nav-pickaxe-icon" src="assets/icons/PickaxIcon.PNG" alt=""><span>Mine</span></button>
     </nav>
-
+<!-- Game functionality -->
     <script src="script.js"></script>
 </body>
 </html>
