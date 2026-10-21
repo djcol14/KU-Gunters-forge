@@ -1693,14 +1693,14 @@ body.home-page .products {
     }
 
 }
-
+/* main layout and introduction */
 .gathering-main {
     box-sizing: border-box;
     width: min(760px, 100%);
     margin: 0 auto;
     padding: 20px 16px calc(var(--footer-height) + 78px);
 }
-
+/* intro image and text styling */
 .gathering-intro {
     display: flex;
     align-items: center;
@@ -1731,14 +1731,14 @@ body.home-page .products {
     margin: 0;
     color: var(--forge-muted);
 }
-
+/* location heading */
 .gathering-location-title {
     margin: 20px 0 10px;
     color: var(--forge-gold-light);
     font-family: "Marker Felt", "Comic Sans MS", cursive;
     text-align: center;
 }
-
+/* gathering board layout and appearance */
 .gathering-board {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -1754,7 +1754,7 @@ body.home-page .products {
         url("assets/backgrounds/productcardback.PNG") center / cover;
     box-shadow: inset 0 0 0 3px rgba(227, 173, 102, 0.16), 0 8px 20px rgba(0, 0, 0, 0.28);
 }
-
+/* backgrounds for each location */
 .gathering-board[data-location="mine"] {
     background:
         linear-gradient(rgba(41, 28, 20, 0.72), rgba(41, 28, 20, 0.78)),
@@ -1772,7 +1772,7 @@ body.home-page .products {
         linear-gradient(rgba(45, 33, 25, 0.7), rgba(45, 33, 25, 0.78)),
         url("assets/backgrounds/Townbackground.PNG") center / cover;
 }
-
+/* gathering titels and hover effects */
 .gathering-tile {
     position: relative;
     display: grid;
@@ -1795,14 +1795,14 @@ body.home-page .products {
     border-color: var(--forge-gold-light);
     background: linear-gradient(145deg, #62472f, #38291e);
 }
-
+/* selected title and keyboard focus */
 .gathering-tile:focus-visible,
 .gathering-tile.is-selected {
     outline: 3px solid var(--forge-gold-light);
     outline-offset: 1px;
     background: #694b2f;
 }
-
+/* resource icons and positioning */
 .gathering-tile-icon {
     display: block;
     width: clamp(26px, 6vw, 55px);
@@ -1827,7 +1827,7 @@ body.home-page .products {
 .gathering-tile-iron {
     position: relative;
 }
-
+/* recource labels */
 .gathering-tile-label {
     position: absolute;
     z-index: 1;
@@ -1857,7 +1857,7 @@ body.home-page .products {
     background: rgba(48, 37, 29, 0.88);
     text-align: center;
 }
-
+/* inventory layout and resource counts */
 .gathering-inventory {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
@@ -1883,14 +1883,14 @@ body.home-page .products {
     font-size: 0.9rem;
     font-variant-numeric: tabular-nums;
 }
-
+/* messages displayed to the player */
 .gathering-message {
     min-height: 2.8em;
     margin: 12px auto 0;
     color: var(--forge-gold-light);
     text-align: center;
 }
-
+/* fixed location navigation at the bottom */
 .gathering-locations {
     position: fixed;
     z-index: 29;
@@ -1906,7 +1906,7 @@ body.home-page .products {
     box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.24);
     backdrop-filter: blur(12px);
 }
-
+/* location buttons */
 .gathering-location {
     min-height: 48px;
     padding: 8px;
@@ -1926,7 +1926,7 @@ body.home-page .products {
     background-color: #493523;
     color: var(--forge-gold-light);
 }
-
+/* backgrounds for location buttons */
 .gathering-location[data-location="mine"] {
     background-image:
         linear-gradient(rgba(41, 28, 20, 0.48), rgba(41, 28, 20, 0.68)),
@@ -1944,11 +1944,11 @@ body.home-page .products {
         linear-gradient(rgba(45, 33, 25, 0.48), rgba(45, 33, 25, 0.68)),
         url("assets/backgrounds/Townbackground.PNG");
 }
-
+/* hover effect for location buttons */
 .gathering-location:hover {
     border-color: var(--forge-gold-light);
 }
-
+/* adjusts layout for smaller screens */
 @media (max-width: 520px) {
     .gathering-main {
         padding: 14px 12px 20px;
