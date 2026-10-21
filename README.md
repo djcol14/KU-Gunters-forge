@@ -51,6 +51,9 @@ Gunters Forge is a mobile-friendly online blacksmith storefront and an order-man
 - Automatically updates prices, order details, and inventory displays.
 
 ## How to run the app
+- The app will be run off of a GitHub repository deployment.
+- Click the website link [Here](https://djcol14.github.io/KU-Gunters-forge/) to open Gunter's Forge.
+- The link can be opened on mobile platforms aswell.
 
 ## How to use the app
 ### Customer Features
@@ -79,5 +82,24 @@ Gunters Forge is a mobile-friendly online blacksmith storefront and an order-man
 - Github
 
 ## Limitations and future improvements
+### Limitations
+- Order and inventory data are only saved to the browser instead of a global database.
+- Orders can only be accessed if they are placed on the same device.
+- Gunter's password does not provide real security and is only purposeful for the demo.
+- A user cannot make real payments on the platform.
+### Future Improvements
+- Add a cloud base and an API to sync order data across devices.
+- Increase security measures.
+- Add online payment processing.
+- Create a page for Gunter to add new products.
+- Allow for product customization.
 
 ## AI Assistance Log
+AI tools were used as a resource to assist the development of Gunter's Forge. It was used as a teaching tool to help understand the concept needed to create the code. 
+
+All AI suggestions were reviewed and commented on by team members to meet the projects requirements. The team made all final decisions regarding the website design and the functionality of the website.
+
+AI assistance was used for:
+- Explaining HTML, CSS, and JavaScript concepts.
+- Troubleshooting and debugging code errors.
+- Implementing design choices in a time efficient manner.
