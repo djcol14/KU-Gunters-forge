@@ -44,7 +44,13 @@ Gunters Forge is a mobile-friendly online blacksmith storefront and an order-man
 - Displays warnings when material supplies are low.
 - Checks and deducts materials when forging begins.
 
-7. Technical Features
+7. New Gunter's Mining Mini Game
+- Mini game that user or Gunter plays to restock inventory.
+- Player selects location for mining.
+- Player moves tiles into rows of three to create matches.
+- Matches award items that automatically replenishes inventory amounts.
+
+9. Technical Features
 - Uses HTML, CSS, and JavaScript to run the website.
 - Adapts the layout to different screen sizes.
 - Saves cart, order, and inventory date in the browser.
@@ -62,6 +68,7 @@ Gunters Forge is a mobile-friendly online blacksmith storefront and an order-man
 - Review the cart, enter a name, and place an order.
 - Track orders by customer name or order number.
 - View order details, status, and position in the queue.
+- Play mining mini-game to help Gunter replenish materials.
 
 ### Gunter's Features
 - Log in to Gunter's Access using the password (forgekeeper), which is only available to Gunter.
@@ -69,6 +76,7 @@ Gunters Forge is a mobile-friendly online blacksmith storefront and an order-man
 - Update order statuses as products move through the forging process.
 - Monitor inventory levels and receive low stock warnings.
 - Update material quantities and manage supplies used for orders.
+- Play mining mini-game to restock materials.
 
 ## Technologies Used
 - HTMl
